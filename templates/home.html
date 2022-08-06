@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html id="home">
+<head>
+	<title>Prediksi COVID-19 di Sumut</title>
+	<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css?family=Aclonica|Lato|Raleway:900|Montserrat:500|Roboto+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css"/>
+<link rel="stylesheet" type="text/css" href="../static/css/style.css">
+</head>
+
+<body>
+<!-- navbar -->
+<nav class="navbar fixed-top navbar-expand-lg navbar-teal" id="navbar">
+	<div class="offset-sm-1">
+   <a class="navbar-brand page-scroll" href="#home">
+   	 <h5 style="color: #00a8a8; font-weight: bold">TUGAS AKHIR </h5>
+	<!-- <img alt="TUGAS AKHIR" src="images/usu.png" width="60" height="60"> -->
+	</a>
+</div>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+    <ul class="navbar-nav my-2 my-lg-0">
+      <li class="nav-item active">
+        <a class="nav-link page-scroll" href="#home" >Home &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link page-scroll" href="#predict">Hasil Prediksi  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link page-scroll" href="#training">Update Prediksi  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="sr-only">(current)</span></a>
+      </li>
+	  <li class="nav-item active">
+        <a class="nav-link page-scroll" href="https://covid19.go.id/" target="_blank">Web Satgas  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="sr-only">(current)</span></a>
+      </li>
+	  <li class="nav-item active">
+        <a class="nav-link page-scroll" href="https://covid19.go.id/dokumentasi-api" target="_blank">API Covid  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="sr-only">(current)</span></a>
+      </li>
+    </ul>
+ 
+  </div>
+</nav>
+	
+<!-- end navbar -->
+
+<!-- jumbotron -->
+	<div class="jumbotron">
+		<div class="container">
+			<br>
+			<div class="row">
+				<div class="col-md-4 offset-md-1" style="margin-top: 50px">
+					<!-- <img src="../static/images/covid2.png"> -->
+					<img src="../static/images/covid.gif" style="margin-left: -150px; width:150%">
+				</div>
+				<div class="col-md-7" style="margin-right: 0px">
+					<h1>Prediksi Angka COVID-19 di Sumatera Utara Menggunakan Metode Gated Recurrent Unit</h1>
+					<h5>AHMAD ADIL - 171402081</h5>
+					<a class="page-scroll" href="#predict"><button type="button" class="button-start">L i h a t &nbsp; P r e d i k s i</button></a>
+					<h5 style="color: #98999b">Program Studi S1 Teknologi Informasi<br>
+						Fakultas Ilmu Komputer dan Teknologi Informasi<br>
+						<b>Universitas Sumatera Utara</b><br>
+						2022</h5>
+				</div>
+			</div>
+	    </div>
+	</div>
+<!-- end jumbotron -->
+
+
+
+<!-- prediksi-->
+<section class="predict" id="predict">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12">
+				<center> 
+					<hr>
+					<h3>Prediksi Untuk 14 Hari Kedepan</h3>
+					<hr>
+					<div class="button-update-newest">
+					<h6> Memprediksi tanggal <b>{{date_first_prediction}} s/d {{date_last_prediction}}</b></h6>
+					<h6> Update data terakhir : <b>{{date_now}}</b></h6>
+					<h6 id="pointdisplay"></h6>
+					<!-- <h6 style="margin-bottom: 10px;"> Tersedia data terbaru: <b>{{date_updated_data}}</b></h6> -->
+					<!-- <a class="page-scroll" href="/predict2"></a><h6><button onclick="alertUpdateData()" type="button" class="btn btn-success">Update Prediksi Terbaru</button></h6></a> -->
+						<form method="POST" enctype ="multipart/form-data" id="train-form2">
+							<!-- <button type="submit" id="train_submit2" class="btn btn-success" onclick="alertUpdateData()">Update Prediksi Terbaru</button> -->
+							<h6 id="pointdisplay2"></h6>
+						</form> 
+					</div>
+					<br/><br/>
+					<div class="load-icon-train2" style="display: none;">
+						 <img src="../static/images/ajax-loader.gif" alt="Loading..."> 
+						 <h6>Data sedang di proses untuk di prediksi ...</h6>
+						 <h6>Harap menunggu sekitar 3-5 menit</h6>
+						 <progress value="0" max="101" id="pbar2" ></progress>
+						 <h6><b id="counting2">memulai proses...</b><b>%</b></h6>
+						 <a href="http://127.0.0.1:8085/"><button type="button" class="btn btn-danger">Cancel</button></a>
+					</div>
+					
+					<div class="hasil_prediksi2" style="display: none;">
+						<!-- <img src="../static/images/ajax-loader.gif" alt="Loading...">  -->
+						<h6>Data telah berhasil di proses, dan prediksi telah dibuat</h6>
+						<h6>Klik tombol dibawah ini untuk melihat hasil prediksnya</h6>
+						<a href="http://127.0.0.1:8085/"><button type="button" class="btn btn-success">Lihat Prediksi</button></a>
+					</div>
+					
+					<br/>
+					<img src="static/images/covidPrediction.png" alt="Prediction Graph">
+					<!-- <img src="../static/images/covidPredict1.png" alt="Loading...">  -->
+					<a class="page-scroll" href="/plot" target="_blank"><button type="button" class="button-start">Lihat Data Sejak 2020</button></a>
+					<br>
+					<br>
+					<br>
+					<hr>
+					<h3>Penjelasan Model</h3>
+					<hr>
+					<h6>Data diambil dari API Satgas COVID-19 Indonesia: <a target="_blank" href="https://data.covid19.go.id/public/api/prov_detail_SUMATERA_UTARA.json">data.covid19.go.id/public/api/prov_detail_SUMATERA_UTARA.json</a></h6>
+					<h6>Detail model yang digunakan dan hasil evaluasinya:</h6>
+					<table class="table">
+						<tr>
+							<td><b>Model</b></td>
+							<td>GRU</td>
+							<td><b>Optimizer</b></td>
+							<td>Adam</td>
+							<td><b>Batch Size</b></td>
+							<td>32</td>
+							<td><b>Epoch</b></td>
+							<td>500</td>
+							<td><b>Hidden Neuron</b></td>
+							<td>32</td>
+						</tr>
+						<tr>
+							<td><b>Training RMSE</b></td>
+							<td>{{train_rmse}}</td>
+							<td><b>Training MSE</b></td>
+							<td>{{train_mse}}</td>
+							<td><b>Training MAE</b></td>
+							<td>{{train_mae}}</td>
+							<td><b>Training Variance</b></td>
+							<td>{{train_variance}}</td>
+							<td><b>Training R2</b></td>
+							<td>{{train_r2}}</td>
+						</tr>
+						<tr>
+							<td><b>Testing RMSE</b></td>
+							<td>{{test_rmse}}</td>
+							<td><b>Testing MSE</b></td>
+							<td>{{test_mse}}</td>
+							<td><b>Testing MAE</b></td>
+							<td>{{test_mae}}</td>
+							<td><b>Testing Variance</b></td>
+							<td>{{test_variance}}</td>
+							<td><b>Testing R2</b></td>
+							<td>{{test_r2}}</td>
+						</tr>
+					</table>
+					<!-- <img src="../static/images/covidAll.png" alt="Loading..." style="margin-top: 50px"> 
+					<img src="../static/images/covidLoss.png" alt="Loading..." style="margin-top: 50px">  -->
+					<!-- <form method="POST" id="pred-form">
+						<div class="form-group">
+							<input type="text" class="form-control" name="data_pred" id="data_pred">
+						</div>
+						<div>
+							<button type="submit" id="pred_submit" class="btn btn-primary">Predict Data</button>
+						</div>
+					 </form> -->
+					 <div class="load-icon-pred" style="display: none;">
+						 <img src="../static/images/ajax-loader.gif" alt="Loading..."> 
+					 </div>
+					<div id="hasil_pred"></div>
+					<img src="static/images/predictionLoss.png" alt="Prediction Loss">
+				</center>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- end prediksi -->
+
+
+<!-- training -->
+<section class="training" id="training">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12">
+					<center>
+						<hr>
+						<h3>Update Data Prediksi</h3>
+						<hr>
+						<h6>Masukkan data histori atau <i>daily report COVID-19</i> terbaru untuk mengupdate hasil prediksi</h6>
+						<form method="POST" enctype ="multipart/form-data" id="train-form">
+							<input type="file" name="file_train" id="file_train">
+							<button type="submit" id="train_submit" class="btn btn-primary" onclick="start_countdown()">Predict</button>
+						</form>
+						<div class="load-icon-train" style="display: none;">
+ 							<img src="../static/images/ajax-loader.gif" alt="Loading..."> 
+							 <h6>Data sedang di proses untuk di prediksi ...</h6>
+							 <h6>Harap menunggu sekitar 3-5 menit</h6>
+							 <progress value="0" max="101" id="pbar" ></progress>
+							 <h6><b id="counting">memulai proses...</b><b>%</b></h6>
+							 <!-- <button id="start" onclick="start_countdown()">Start CountDown</button> -->
+							 <script type="text/javascript">
+							   function start_countdown(){
+								   var reverse_counter = 100;
+								   var downloadTimer = setInterval(function(){
+									   document.getElementById("pbar").value = 101 - --reverse_counter;
+									   if(reverse_counter <= 0)
+										   clearInterval(downloadTimer);
+										   document.getElementById("counting").innerHTML = 99 - reverse_counter;
+									 },2800);
+							   }
+							 </script>
+							 <a href="http://127.0.0.1:8085/"><button type="button" class="btn btn-danger">Cancel</button></a>
+ 						</div>
+						 <div class="hasil_prediksi" style="display: none;">
+							  <!-- <img src="../static/images/ajax-loader.gif" alt="Loading...">  -->
+							  <h6>Data telah berhasil di proses, dan prediksi telah dibuat</h6>
+							  <h6>Klik tombol dibawah ini untuk melihat hasil prediksnya</h6>
+							  <a href="http://127.0.0.1:8085/"><button type="button" class="btn btn-success">Lihat Prediksi</button></a>
+						  </div>
+						  
+					</center>
+					<!-- <div class="card" id="preproccessing" style="display: none;">
+						<div class="card-body">
+							<div class="row" id="table_preproccess">
+									<div style="font-size: 20px;"><center><b>Tahap Pre-Proccessing</b></center></div>
+									<div>
+										Pada bagian ini ditampilkan tahapan pre-processing beserta contoh penerapannya pada salah satu kalimat dari data training.
+									</div>
+									<br><br>
+									<table class="table">
+										<tr>
+											<td class="left"><b>Input</b></td>
+											<td class="right" id="text_input"></td>
+										</tr>
+										<tr>
+											<td class="left"><b>Case Folding</b></td>
+											<td class="right" id="text_case_folding"></td>
+										</tr>
+										<tr>
+											<td class="left"><b>Stopword Removal</b></td>
+											<td class="right" id="text_stopword"></td>
+										</tr>
+										<tr>
+											<td class="left"><b>Punctuation Removal</b></td>
+											<td class="right" id="text_punct"></td>
+										</tr>
+										<tr>
+											<td class="left"><b>Tokenisasi</b></td>
+											<td class="right" id="text_tokenisasi"></td>
+										</tr>
+									</table>
+							</div>
+						</div>
+					</div>
+					<div class="card" id="hasil_training" style="display: none;">
+						<div class="card-body">
+							<div class="row" id="table_training">
+									<div style="font-size: 20px;"><center><b>Hasil Training</b></center></div><br><br>
+									<table class="table">
+										<tr>
+											<td><b>Model</b></td>
+											<td>GRU</td><td></td>
+											<td><b>Embedding Layer</b></td>
+											<td>300</td><td></td>
+											<td><b>Epoch</b></td>
+											<td>30</td><td></td>
+											<td><b>Jumlah Unit</b></td>
+											<td>32</td>
+										</tr>
+										<tr>
+											<td><b>Akurasi Train</b></td>
+											<td id=nilai_akurasi_train></td><td></td>
+											<td><b>Loss Train</b></td>
+											<td id=nilai_loss_train></td><td></td>
+											<td><b>Akurasi Validasi</b></td>
+											<td id=nilai_akurasi_val></td><td></td>
+											<td><b>Loss Validasi</b></td>
+											<td id=nilai_loss_val></td>
+										</tr>
+									</table>
+							</div>
+							<div class="row">
+								<div class="col-sm-6 col-md-6" id="loss_plot"></div>
+								<div class="col-sm-6 col-md-6" id="acc_plot"></div>
+							</div>
+						</div>
+					</div> -->
+				</div>
+			</div>
+		</div>
+	</section>
+<!-- end training -->
+
+</body>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+<!-- Latest compiled and minified JavaScript -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<script src="../static/js/jquery.easing.1.3.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="../static/js/script.js"></script> 
+<script type="text/javascript">
+	$('.carousel').carousel({
+  interval: 1500
+})
+</script>
+<script>
+	function alertUpdateData() {
+		alert ("Mengupdate hasil prediksi membutuhkan 3-5 menit!");
+		// document.write ("Have a Nice day!");
+	//   let text;
+	//   let person = prompt("Please enter your name:", "Harry Potter");
+	//   if (person == null || person == "") {
+	// 	text = "User cancelled the prompt.";
+	//   } else {
+	// 	text = "Hello " + person + "! How are you today?";
+	//   }
+	//   document.getElementById("demo").innerHTML = text;
+
+	
+	var reverse_counter2 = 100;
+	var downloadTimer2 = setInterval(function(){
+		document.getElementById("pbar2").value = 101 - --reverse_counter2;
+		if(reverse_counter2 <= 0)
+			clearInterval(downloadTimer2);
+			document.getElementById("counting2").innerHTML = 99 - reverse_counter2;
+		},2800);
+	}
+	// function firstx2() {
+	// let result = JSON.parse(xhr.responseText);
+	if ( '{{date_updated_data}}' != '{{date_now}}') { // date_updated_data == date_now
+		// document.getElementById("pointdisplay").innerHTML = "<h6 style='margin-bottom: 10px;'> Tersedia data terbaru: <b>{{date_updated_data}}</b></h6>";
+		document.getElementById("pointdisplay").innerHTML = '<h6 style="margin-bottom: 10px;"> Tersedia data terbaru: <b>{{date_updated_data}}</b></h6>';
+		document.getElementById("pointdisplay2").innerHTML = '<button type="submit" id="train_submit2" class="btn btn-success" onclick="alertUpdateData()">Update Prediksi Terbaru</button>';
+	}
+	// }
+	</script>
+</html>
